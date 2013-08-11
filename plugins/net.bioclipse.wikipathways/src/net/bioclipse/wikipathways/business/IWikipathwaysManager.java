@@ -15,25 +15,22 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.eclipse.core.runtime.CoreException;
-import org.xml.sax.SAXException;
-
 import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
-import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.managers.business.IBioclipseManager;
 
+import org.xml.sax.SAXException;
+
 @PublishedClass(
-    value="TODO: Describe the manager here."
+    value="Manager that allows interaction with WikiPathways.",
+    doi="10.1371/journal.pbio.0060184"
 )
 public interface IWikipathwaysManager extends IBioclipseManager {
 
 	  @Recorded
 	  @PublishedMethod(
-	        params = "", 
 	        methodSummary = "Returns list of organisms covered in WikiPathways."
-	        	
 	    )
     public String listOrganisms()
 	throws ParserConfigurationException, SAXException, IOException;
@@ -42,7 +39,6 @@ public interface IWikipathwaysManager extends IBioclipseManager {
 	  @PublishedMethod(
 	        params = "String organism", 
 	        methodSummary = "Returns list of pathways for a given organism covered in WikiPathways."
-	        	
 	    )
     public String listPathways(String organism)
 	throws ParserConfigurationException, SAXException, IOException, TransformerException;
