@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Wikipathways
-Bundle-SymbolicName: net.bioclipse.wikipathways; singleton:=true
+Bundle-SymbolicName: net.bioclipse.wikipathways.business; singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.bioclipse.wikipathways.Activator
 Export-Package: net.bioclipse.wikipathways, net.bioclipse.wikipathways.business
