@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012  Ola Spjuth <ola.spjuth@gmail.com>
+ * Copyright (c) 2012  Your Name <you@example.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
