@@ -110,12 +110,15 @@ public class PathvisioManager implements IBioclipseManager {
 			throws BioclipseException{
 		
 		//Extract the WP ID
-		String pattern = ".*\\/(WP\\d+)_.*";
-		String updated = pathwayID.replaceAll(pattern, "$1"); 
+		if (!pathwayID.startsWith("WP")) pathwayID = "WP" + pathwayID;
+		if (pathwayID.contains("_")) {
+			String pattern = ".*\\/(WP\\d+)_.*";
+			pathwayID = pathwayID.replaceAll(pattern, "$1");
+		}
 		
 		IBioclipsePlatformManager bc = net.bioclipse.business.Activator.getDefault().getJavaManager();
 
-		String res = bc.downloadAsFile(WIKIPATHWAYS_BASE_URL+updated, "/Virtual/"+updated+".gpml");
+		String res = bc.downloadAsFile(WIKIPATHWAYS_BASE_URL+pathwayID, "/Virtual/"+pathwayID+".gpml");
 		return res;
 	}
 
