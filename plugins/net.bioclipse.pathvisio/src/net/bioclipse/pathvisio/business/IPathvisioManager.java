@@ -28,20 +28,20 @@ import net.bioclipse.managers.business.IBioclipseManager;
 public interface IPathvisioManager extends IBioclipseManager {
 
     @PublishedMethod(
-        methodSummary = "Export an image from a pathway file in GPML format",
+        methodSummary = "Export an image from a pathway file in GPML format.",
         params="String pathwayFile"
     )
     public String exportPNG(String pathwayFile) throws ConverterException, 
     IOException, IDMapperException;
     
     @PublishedMethod(
-    	methodSummary = "Query wikipathways for a protein label",
+    	methodSummary = "Query WikiPathways for a protein label.",
     	params="String label"
     )
 	public Set<String> queryWikipathways(String label) throws BioclipseException;
     
     @PublishedMethod(
-        methodSummary = "Gets the GPML for the given WikiPathway",
+        methodSummary = "Gets the GPML for the given WikiPathway identifier, such as WP2537.",
         params="String pathwayID"
     )
 	public String getGPML(String pathwayID) 
