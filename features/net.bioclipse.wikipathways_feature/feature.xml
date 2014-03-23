@@ -2,7 +2,7 @@
 <feature
       id="net.bioclipse.wikipathways_feature"
       label="Wikipathways"
-      version="1.0.0.qualifier"
+      version="2.6.1.qualifier"
       provider-name="bioclipse.net"
       plugin="net.bioclipse.wikipathways">
 

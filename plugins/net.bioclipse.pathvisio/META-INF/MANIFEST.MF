@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Pathvisio
 Bundle-SymbolicName: net.bioclipse.pathvisio; singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.6.1.qualifier
 Bundle-Activator: net.bioclipse.pathvisio.Activator
 Bundle-Vendor: bioclipse.net
 Export-Package: net.bioclipse.pathvisio, net.bioclipse.pathvisio.business
