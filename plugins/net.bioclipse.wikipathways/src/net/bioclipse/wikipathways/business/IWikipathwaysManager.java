@@ -11,6 +11,7 @@
 package net.bioclipse.wikipathways.business;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -28,19 +29,19 @@ import org.xml.sax.SAXException;
 )
 public interface IWikipathwaysManager extends IBioclipseManager {
 
-	  @Recorded
-	  @PublishedMethod(
-	        methodSummary = "Returns list of organisms covered in WikiPathways."
-	    )
-    public String listOrganisms()
+	@Recorded
+	@PublishedMethod(
+	    methodSummary = "Returns list of organisms covered in WikiPathways."
+	)
+    public List<String> listOrganisms()
 	throws ParserConfigurationException, SAXException, IOException;
 	  
-	  @Recorded
-	  @PublishedMethod(
-	        params = "String organism", 
-	        methodSummary = "Returns list of pathways for a given organism covered in WikiPathways."
-	    )
-    public String listPathways(String organism)
+	@Recorded
+	@PublishedMethod(
+	    params = "String organism", 
+	    methodSummary = "Returns list of pathways for a given organism covered in WikiPathways."
+	)
+    public List<String> listPathways(String organism)
 	throws ParserConfigurationException, SAXException, IOException, TransformerException;
 	  
 //	  @Recorded
