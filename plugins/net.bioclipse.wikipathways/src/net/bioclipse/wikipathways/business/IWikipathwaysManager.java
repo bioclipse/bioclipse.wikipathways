@@ -11,17 +11,15 @@
 package net.bioclipse.wikipathways.business;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.managers.business.IBioclipseManager;
 
-import org.xml.sax.SAXException;
+import org.pathvisio.core.model.ConverterException;
 
 @PublishedClass(
     value="Manager that allows interaction with WikiPathways.",
@@ -34,7 +32,7 @@ public interface IWikipathwaysManager extends IBioclipseManager {
 	    methodSummary = "Returns list of organisms covered in WikiPathways."
 	)
     public List<String> listOrganisms()
-	throws ParserConfigurationException, SAXException, IOException;
+	throws IOException;
 	  
 	@Recorded
 	@PublishedMethod(
@@ -42,17 +40,16 @@ public interface IWikipathwaysManager extends IBioclipseManager {
 	    methodSummary = "Returns list of pathways for a given organism covered in WikiPathways."
 	)
     public List<String> listPathways(String organism)
-	throws ParserConfigurationException, SAXException, IOException, TransformerException;
-	  
-//	  @Recorded
-//	  @PublishedMethod(
-//	        params = "String pwId, Integer revision", 
-//	        methodSummary = "Download the pathway from WikiPathways."
-//	        	
-//	    )
-//    public String getPathways(String pwId, Integer revision)
-//	throws ParserConfigurationException, SAXException, IOException, TransformerException;
-//	  
+	throws IOException;
+
+    @Recorded
+    @PublishedMethod(
+        params = "String pwId, Integer revision", 
+        methodSummary = "Download the pathway from WikiPathways."
+    )
+    public String getPathway(String pwId, Integer revision)
+	throws IOException, ConverterException;
+
 //	  @Recorded
 //	  @PublishedMethod(
 //	        params = "String pwId", 
@@ -61,16 +58,15 @@ public interface IWikipathwaysManager extends IBioclipseManager {
 //	    )
 //    public String getPathwayInfo(String pwId)
 //	throws ParserConfigurationException, SAXException, IOException, TransformerException;
-//	  
-//	  @Recorded
-//	  @PublishedMethod(
-//	        params = "String pwId, String timestamp", 
-//	        methodSummary = "Get the revision history of a pathway."
-//	        	
-//	    )
-//    public String getPathwayHistory(String pwId)
-//	throws ParserConfigurationException, SAXException, IOException, TransformerException;
-//	  
+
+    @Recorded
+    @PublishedMethod(
+        params = "String pwId",
+        methodSummary = "Get the revision history of a pathway."
+    )
+    public List<String> getPathwayHistory(String pwId)
+	throws IOException, ParseException;
+	  
 //	  @Recorded
 //	  @PublishedMethod(
 //	        params = "String timestamp", 
