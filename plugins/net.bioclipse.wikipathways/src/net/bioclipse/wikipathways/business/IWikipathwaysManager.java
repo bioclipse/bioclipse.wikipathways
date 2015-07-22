@@ -74,7 +74,31 @@ public interface IWikipathwaysManager extends IBioclipseManager {
     )
     public List<String> getPathwayHistory(String pwId)
 	throws IOException, ParseException;
-	  
+
+    @Recorded
+    @PublishedMethod(
+        params = "String pwId",
+        methodSummary = "Get the ontology tags of a pathway."
+    )
+    public List<String> getOntologyTermsByPathway(String pwId)
+    throws IOException, ParseException;
+
+    @Recorded
+    @PublishedMethod(
+        params = "String pwId, String term, String termId",
+        methodSummary = "Saves an ontology tag for a pathway."
+    )
+    public boolean saveOntologyTag(String pwId, String term, String termId)
+    throws IOException, BioclipseException;
+
+    @Recorded
+    @PublishedMethod(
+        params = "String pwId, String termId",
+        methodSummary = "Removes an ontology tag for a pathway."
+    )
+    public boolean removeOntologyTag(String pwId, String termId)
+    throws IOException, BioclipseException;
+
 //	  @Recorded
 //	  @PublishedMethod(
 //	        params = "String timestamp", 

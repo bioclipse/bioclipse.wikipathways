@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.pathvisio.core.model.ConverterException;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.wikipathways.webservice.WSHistoryRow;
+import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
@@ -138,6 +139,52 @@ public class WikipathwaysManager implements IBioclipseManager {
 		}
 		monitor.worked(2);
     	return revisions;
+    }
+
+    public List<String> getOntologyTermsByPathway(String pwId, IProgressMonitor monitor)
+    		throws IOException, ParseException {
+    	if (monitor == null) {
+			monitor = new NullProgressMonitor();
+		}    	
+		monitor.beginTask(
+			"Look up the ontology terms of a pathway.", 2
+		);
+    	WikiPathwaysClient client = getClient();
+		WSOntologyTerm[] terms = client.getOntologyTermsByPathway(pwId);
+		List<String> revisions = new ArrayList<String>();
+		for (WSOntologyTerm term : terms) {
+			revisions.add(term.getName() + " (" + term.getId() + ", " + term.getOntology() + ")");
+		}
+		monitor.worked(2);
+    	return revisions;
+    }
+
+    public boolean saveOntologyTag(String pwId, String term, String termId, IProgressMonitor monitor)
+    	    throws IOException, BioclipseException {
+    	if (monitor == null) {
+    		monitor = new NullProgressMonitor();
+    	}    	
+    	monitor.beginTask(
+    		"Save an ontology term for a pathway.", 2
+    	);
+    	WikiPathwaysClient client = getClient();
+    	boolean success = client.saveOntologyTag(pwId, term, termId);
+    	monitor.worked(2);
+    	return success;
+    }
+
+    public boolean removeOntologyTag(String pwId, String termId, IProgressMonitor monitor)
+    	    throws IOException, BioclipseException {
+    	if (monitor == null) {
+    		monitor = new NullProgressMonitor();
+    	}    	
+    	monitor.beginTask(
+    		"Removes an ontology term for a pathway.", 2
+    	);
+    	WikiPathwaysClient client = getClient();
+    	boolean success = client.removeOntologyTag(pwId, termId);
+    	monitor.worked(2);
+    	return success;
     }
 
 }
