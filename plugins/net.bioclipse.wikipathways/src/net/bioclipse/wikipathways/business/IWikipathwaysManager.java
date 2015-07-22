@@ -17,6 +17,7 @@ import java.util.List;
 import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.managers.business.IBioclipseManager;
 
 import org.pathvisio.core.model.ConverterException;
@@ -26,6 +27,13 @@ import org.pathvisio.core.model.ConverterException;
     doi="10.1371/journal.pbio.0060184"
 )
 public interface IWikipathwaysManager extends IBioclipseManager {
+
+	@Recorded
+	@PublishedMethod(
+		params = "String name, String pass", 
+	    methodSummary = "Logs in on the WikiPathways website and returns an authorization key."
+	)
+    public String login(String name, String pass) throws BioclipseException;
 
 	@Recorded
 	@PublishedMethod(

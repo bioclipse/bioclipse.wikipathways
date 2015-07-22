@@ -11,12 +11,14 @@
 package net.bioclipse.wikipathways.business;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.managers.business.IBioclipseManager;
 
 import org.bridgedb.bio.Organism;
@@ -32,6 +34,8 @@ import org.wikipathways.client.WikiPathwaysClient;
 
 public class WikipathwaysManager implements IBioclipseManager {
 
+	private WikiPathwaysClient wpClient = null;
+
     /**
      * Gives a short one word name of the manager used as variable name when
      * scripting.
@@ -42,7 +46,33 @@ public class WikipathwaysManager implements IBioclipseManager {
     public String getWebServiceAddress() {
         return "http://webservice.wikipathways.org";
     }
+
+    private WikiPathwaysClient getClient() throws MalformedURLException {
+    	if (wpClient == null) {
+    		URL wsURL = new URL(getWebServiceAddress());
+    		wpClient = new WikiPathwaysClient(wsURL);
+    	}
+    	return wpClient;
+    }
     
+    public String login(String name, String pass, IProgressMonitor monitor) throws BioclipseException {
+    	if (monitor == null) monitor = new NullProgressMonitor();
+
+		monitor.beginTask(
+			"Getting an authorization key.", 2
+		);
+		try {
+	    	WikiPathwaysClient client = getClient();
+			client.login(name, pass);
+		} catch (Throwable exception) {
+			throw new BioclipseException(
+				"Error while login in on the WikiPathways website: " + exception.getMessage(),
+				exception
+			);
+		}
+		return "";
+    }
+
     public List<String> listOrganisms(IProgressMonitor monitor) throws IOException {
     	if (monitor == null) {
 			monitor = new NullProgressMonitor();
@@ -50,8 +80,7 @@ public class WikipathwaysManager implements IBioclipseManager {
 		monitor.beginTask(
 			"Downloading list of organisms covered in WikiPathways.", 2
 		);
-    	URL wsURL = new URL(getWebServiceAddress());
-		WikiPathwaysClient client = new WikiPathwaysClient(wsURL);
+    	WikiPathwaysClient client = getClient();
 		String[] organisms = client.listOrganisms();
 		List<String> organismList = new ArrayList<String>();
 		for (String organism : organisms) organismList.add(organism);
@@ -66,8 +95,7 @@ public class WikipathwaysManager implements IBioclipseManager {
 		monitor.beginTask(
 			"Returns list of pathways for a given organism covered in WikiPathways.", 2
 		);
-    	URL wsURL = new URL(getWebServiceAddress());
-		WikiPathwaysClient client = new WikiPathwaysClient(wsURL);
+    	WikiPathwaysClient client = getClient();
 		Organism organismObj = Organism.fromLatinName(organism);
 		WSPathwayInfo[] pathwayObjs = client.listPathways(organismObj);
 		List<String> pathways = new ArrayList<String>();
@@ -86,8 +114,7 @@ public class WikipathwaysManager implements IBioclipseManager {
 		monitor.beginTask(
 			"Returns a pathway as GPML.", 2
 		);
-    	URL wsURL = new URL(getWebServiceAddress());
-		WikiPathwaysClient client = new WikiPathwaysClient(wsURL);
+    	WikiPathwaysClient client = getClient();
 		WSPathway wsPathway = client.getPathway(pwId, revision.intValue());
 		Pathway pathway = WikiPathwaysClient.toPathway(wsPathway);
 		monitor.worked(2);
@@ -102,8 +129,7 @@ public class WikipathwaysManager implements IBioclipseManager {
 		monitor.beginTask(
 			"Returns the history of a pathway.", 2
 		);
-    	URL wsURL = new URL(getWebServiceAddress());
-		WikiPathwaysClient client = new WikiPathwaysClient(wsURL);
+    	WikiPathwaysClient client = getClient();
 		WSPathwayHistory history = client.getPathwayHistory(pwId, new Date(0));
 		List<String> revisions = new ArrayList<String>();
 		WSHistoryRow[] revs = history.getHistory();
